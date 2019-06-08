@@ -140,202 +140,198 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        children: <Widget>[
-          Column (
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  'Crew Members',
-                ),
-                RaisedButton (
-                  child: Container(
-                    child: Image.asset(_crewImages[_crew1Index], height: _meepleImageHeight,),
-
+      body: GridView.count(
+                padding: const EdgeInsets.all(20.0),
+                crossAxisSpacing: 10.0,
+                crossAxisCount: 4,
+                children: <Widget>[
+                  Column(
+                    children: [
+                      Expanded(child: Container()),
+                      Text(
+                        'Crew Members',
+                      ),
+                    ],
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _crew1Index = ++_crew1Index % _crewImages.length;
-                      if (_crew1Index == 0) _crew1Index++;
-                      _updateScores();
-                    });
-                  }),
-                RaisedButton (
-                    child: Container(
-                      child: Image.asset(_crewImages[_crew2Index], height: _meepleImageHeight,),
+                  Column(
+                    children: [
+                      Expanded(child: Container()),
+                      Text(
+                        'Gems',
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Expanded(child: Container()),
+                      Text(
+                        'More Gems',
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Expanded(child: Container()),
+                      Text(
+                        'Score',
+                      ),
+                    ],
+                  ),
 
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _crew2Index = ++_crew2Index % _crewImages.length;
-                        _updateScores();
-                      });
-                    }),
-                RaisedButton (
-                    child: Container(
-                      child: Image.asset(_crewImages[_crew3Index], height: _meepleImageHeight,),
+                  RaisedButton (
+                      child: Container(
+                        child: Image.asset(_crewImages[_crew1Index], height: _meepleImageHeight,),
 
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _crew3Index = ++_crew3Index % _crewImages.length;
-                        _updateScores();
-                      });
-                    }),
-                RaisedButton (
-                    child: Container(
-                      child: Image.asset(_crewImages[_crew4Index], height: _meepleImageHeight,),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _crew1Index = ++_crew1Index % _crewImages.length;
+                          if (_crew1Index == 0) _crew1Index++;
+                          _updateScores();
+                        });
+                      }),
+                  RaisedButton (
+                      child: Container(
+                        child: Image.asset(_gemImages[_gem11Index], height: _meepleImageHeight,),
 
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _crew4Index = ++_crew4Index % _crewImages.length;
-                        _updateScores();
-                      });
-                    }),
-              ]
-          ),
-          Column (
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  'Gems',
-                ),
-                RaisedButton (
-                    child: Container(
-                      child: Image.asset(_gemImages[_gem11Index], height: _meepleImageHeight,),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _gem11Index = ++_gem11Index % _gemImages.length;
+                          _updateScores();
+                        });
+                      }),
+                  RaisedButton (
+                      child: Container(
+                        child: Image.asset(_gemImages[_gem21Index], height: _meepleImageHeight,),
 
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _gem11Index = ++_gem11Index % _gemImages.length;
-                        _updateScores();
-                      });
-                    }),
-                RaisedButton (
-                    child: Container(
-                      child: Image.asset(_gemImages[_gem12Index], height: _meepleImageHeight,),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _gem21Index = ++_gem21Index % _gemImages.length;
+                          _updateScores();
+                        });
+                      }),
+                  Text(
+                    '$_row1scoreStr',
+                    style: Theme.of(context).textTheme.display1,
+                  ),
 
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _gem12Index = ++_gem12Index % _gemImages.length;
-                        _updateScores();
-                      });
-                    }),
-                RaisedButton (
-                    child: Container(
-                      child: Image.asset(_gemImages[_gem13Index], height: _meepleImageHeight,),
+                  RaisedButton (
+                      child: Container(
+                        child: Image.asset(_crewImages[_crew2Index], height: _meepleImageHeight,),
 
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _gem13Index = ++_gem13Index % _gemImages.length;
-                        _updateScores();
-                      });
-                    }),
-                RaisedButton (
-                    child: Container(
-                      child: Image.asset(_gemImages[_gem14Index], height: _meepleImageHeight,),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _crew2Index = ++_crew2Index % _crewImages.length;
+                          _updateScores();
+                        });
+                      }),
+                  RaisedButton (
+                      child: Container(
+                        child: Image.asset(_gemImages[_gem12Index], height: _meepleImageHeight,),
 
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _gem14Index = ++_gem14Index % _gemImages.length;
-                        _updateScores();
-                      });
-                    }),
-              ]
-          ),
-          Column (
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  'More Gems',
-                ),
-                RaisedButton (
-                    child: Container(
-                      child: Image.asset(_gemImages[_gem21Index], height: _meepleImageHeight,),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _gem12Index = ++_gem12Index % _gemImages.length;
+                          _updateScores();
+                        });
+                      }),
+                  RaisedButton (
+                      child: Container(
+                        child: Image.asset(_gemImages[_gem22Index], height: _meepleImageHeight,),
 
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _gem21Index = ++_gem21Index % _gemImages.length;
-                        _updateScores();
-                      });
-                    }),
-                RaisedButton (
-                    child: Container(
-                      child: Image.asset(_gemImages[_gem22Index], height: _meepleImageHeight,),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _gem22Index = ++_gem22Index % _gemImages.length;
+                          _updateScores();
+                        });
+                      }),
+                  Text(
+                    '$_row2scoreStr',
+                    style: Theme.of(context).textTheme.display1,
+                  ),
 
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _gem22Index = ++_gem22Index % _gemImages.length;
-                        _updateScores();
-                      });
-                    }),
-                RaisedButton (
-                    child: Container(
-                      child: Image.asset(_gemImages[_gem23Index], height: _meepleImageHeight,),
+                  RaisedButton (
+                      child: Container(
+                        child: Image.asset(_crewImages[_crew3Index], height: _meepleImageHeight,),
 
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _gem23Index = ++_gem23Index % _gemImages.length;
-                        _updateScores();
-                      });
-                    }),
-                RaisedButton (
-                    child: Container(
-                      child: Image.asset(_gemImages[_gem24Index], height: _meepleImageHeight,),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _crew3Index = ++_crew3Index % _crewImages.length;
+                          _updateScores();
+                        });
+                      }),
+                  RaisedButton (
+                      child: Container(
+                        child: Image.asset(_gemImages[_gem13Index], height: _meepleImageHeight,),
 
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _gem24Index = ++_gem24Index % _gemImages.length;
-                        _updateScores();
-                      });
-                    }),
-              ]
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Text(
-                'Score',
-              ),
-              Text(
-                '$_row1scoreStr',
-                style: Theme.of(context).textTheme.display1,
-              ),
-              Text(
-                '$_row2scoreStr',
-                style: Theme.of(context).textTheme.display1,
-              ),
-              Text(
-                '$_row3scoreStr',
-                style: Theme.of(context).textTheme.display1,
-              ),
-              Text(
-                '$_row4scoreStr',
-                style: Theme.of(context).textTheme.display1,
-              ),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _gem13Index = ++_gem13Index % _gemImages.length;
+                          _updateScores();
+                        });
+                      }),
+                  RaisedButton (
+                      child: Container(
+                        child: Image.asset(_gemImages[_gem23Index], height: _meepleImageHeight,),
+
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _gem23Index = ++_gem23Index % _gemImages.length;
+                          _updateScores();
+                        });
+                      }),
+                  Text(
+                    '$_row3scoreStr',
+                    style: Theme.of(context).textTheme.display1,
+                  ),
+
+                  RaisedButton (
+                      child: Container(
+                        child: Image.asset(_crewImages[_crew4Index], height: _meepleImageHeight,),
+
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _crew4Index = ++_crew4Index % _crewImages.length;
+                          _updateScores();
+                        });
+                      }),
+                  RaisedButton (
+                      child: Container(
+                        child: Image.asset(_gemImages[_gem14Index], height: _meepleImageHeight,),
+
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _gem14Index = ++_gem14Index % _gemImages.length;
+                          _updateScores();
+                        });
+                      }),
+                  RaisedButton (
+                      child: Container(
+                        child: Image.asset(_gemImages[_gem24Index], height: _meepleImageHeight,),
+
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _gem24Index = ++_gem24Index % _gemImages.length;
+                          _updateScores();
+                        });
+                      }),
+                  Text(
+                    '$_row4scoreStr',
+                    style: Theme.of(context).textTheme.display1,
+                  ),
             ],
         ),
-      ]),
-      ]),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
