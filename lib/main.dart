@@ -9,6 +9,7 @@ const double _meepleImageHeight = 80.0;
 
 final RouteObserver<Route> routeObserver = RouteObserver<Route>();
 
+List _crewNames = [ "Invisible Player", "Red Player", "Yellow Player", "Green Player", "Blue Player", "Purple Player"];
 List _crewImages = [ "nonocrew.png", "redcrew.png", "yellowcrew.png", "greencrew.png" , "bluecrew.png", "purplecrew.png" ];
 List _gemImages = [ "nonogem.png", "purplegem.png", "redgem.png", "greengem.png" ]; //, "cleargem.png" ];
 List _gemValues = [ 0, 100, 50, 10, 1 ];
@@ -70,17 +71,19 @@ class _MyHomePageState extends State<MyHomePage> {
   String _row2scoreStr = "";
   String _row3scoreStr = "";
   String _row4scoreStr = "";
+  int total1 = 0;
+  int total2 = 0;
+  int total3 = 0;
+  int total4 = 0;
+  int index1 = 0;
+  int index2 = 0;
+  int index3 = 0;
+  int index4 = 0;
+  String _total1 = "";
+  String _total2 = "";
+  String _total3 = "";
+  String _total4 = "";
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   int evalCrewCount(int crewIndex) {
     if (crewIndex > 0) return 1;
@@ -107,21 +110,75 @@ class _MyHomePageState extends State<MyHomePage> {
     int crewCount = 2 + evalCrewCount(_crew2Index) + evalCrewCount(_crew3Index) + evalCrewCount(_crew4Index);
     int payout = (totalscore / crewCount).floor();
     int captainExtra = totalscore - (payout * crewCount);
-    _row1scoreStr = (captainExtra + (2 * payout)).toString();
+
+    index1 = 0;
+    index2 = 0;
+    index3 = 0;
+    index4 = 0;
+
+    index1 = _crew1Index;
+    total1 = captainExtra + (2 * payout);
+    _row1scoreStr = total1.toString();
+
     if (_crew2Index > 0) {
       _row2scoreStr = payout.toString();
+      if (_crew2Index == index1) {
+        total1 += payout;
+      } else {
+        index2 = _crew2Index;
+        total2 = payout;
+      }
     } else {
       _row2scoreStr = "";
     }
     if (_crew3Index > 0) {
       _row3scoreStr = payout.toString();
+      if (_crew3Index == index1) {
+        total1 += payout;
+      } else {
+        if (_crew3Index == index2) {
+          total2 += payout;
+        } else {
+          index3 = _crew3Index;
+          total3 = payout;
+        }
+      }
     } else {
       _row3scoreStr = "";
     }
     if (_crew4Index > 0) {
       _row4scoreStr = payout.toString();
+      if (_crew4Index == index1) {
+        total1 += payout;
+      } else {
+        if (_crew4Index == index2) {
+          total2 += payout;
+        } else {
+          if (_crew4Index == index3) {
+            total3 += payout;
+          } else {
+            index4 = _crew4Index;
+            total4 = payout;
+          }
+        }
+      }
     } else {
       _row4scoreStr = "";
+    }
+
+    _total1 = "";
+    _total2 = "";
+    _total3 = "";
+    _total4 = "";
+    _total1 = _crewNames[index1] + " gets " + total1.toString();
+    if (index2 > 0) {
+      _total2 = _crewNames[index2] + " gets " + total2.toString();
+    }
+    if (index3 > 0) {
+      _total3 = _crewNames[index3] + " gets " + total3.toString();
+    }
+    if (index4 > 0) {
+      _total4 = _crewNames[index4] + " gets " + total4.toString();
     }
   }
 
@@ -140,7 +197,8 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: GridView.count(
+      body:
+    GridView.count(
                 padding: const EdgeInsets.all(20.0),
                 crossAxisSpacing: 10.0,
                 crossAxisCount: 4,
@@ -150,6 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Expanded(child: Container()),
                       Text(
                         'Crew Members',
+                        style: Theme.of(context).textTheme.subhead,
                       ),
                     ],
                   ),
@@ -158,6 +217,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Expanded(child: Container()),
                       Text(
                         'Gems',
+                        style: Theme.of(context).textTheme.subhead,
                       ),
                     ],
                   ),
@@ -166,6 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Expanded(child: Container()),
                       Text(
                         'More Gems',
+                        style: Theme.of(context).textTheme.subhead,
                       ),
                     ],
                   ),
@@ -174,6 +235,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Expanded(child: Container()),
                       Text(
                         'Score',
+                        style: Theme.of(context).textTheme.subhead,
                       ),
                     ],
                   ),
@@ -212,9 +274,15 @@ class _MyHomePageState extends State<MyHomePage> {
                           _updateScores();
                         });
                       }),
-                  Text(
-                    '$_row1scoreStr',
-                    style: Theme.of(context).textTheme.display1,
+                  Column(
+                    children: [
+                      Expanded(child: Container()),
+                      Text(
+                        '$_row1scoreStr',
+                        style: Theme.of(context).textTheme.display1,
+                      ),
+                      Expanded(child: Container()),
+                    ],
                   ),
 
                   RaisedButton (
@@ -250,9 +318,15 @@ class _MyHomePageState extends State<MyHomePage> {
                           _updateScores();
                         });
                       }),
-                  Text(
-                    '$_row2scoreStr',
-                    style: Theme.of(context).textTheme.display1,
+                  Column(
+                    children: [
+                      Expanded(child: Container()),
+                      Text(
+                        '$_row2scoreStr',
+                        style: Theme.of(context).textTheme.display1,
+                      ),
+                      Expanded(child: Container()),
+                    ],
                   ),
 
                   RaisedButton (
@@ -288,9 +362,15 @@ class _MyHomePageState extends State<MyHomePage> {
                           _updateScores();
                         });
                       }),
-                  Text(
-                    '$_row3scoreStr',
-                    style: Theme.of(context).textTheme.display1,
+                  Column(
+                    children: [
+                      Expanded(child: Container()),
+                      Text(
+                        '$_row3scoreStr',
+                        style: Theme.of(context).textTheme.display1,
+                      ),
+                      Expanded(child: Container()),
+                    ],
                   ),
 
                   RaisedButton (
@@ -326,12 +406,65 @@ class _MyHomePageState extends State<MyHomePage> {
                           _updateScores();
                         });
                       }),
-                  Text(
-                    '$_row4scoreStr',
-                    style: Theme.of(context).textTheme.display1,
+                  Column(
+                    children: [
+                      Expanded(child: Container()),
+                      Text(
+                        '$_row4scoreStr',
+                        style: Theme.of(context).textTheme.display1,
+                      ),
+                      Expanded(child: Container()),
+                    ],
                   ),
-            ],
-        ),
-    );
+
+                  Column(
+                    children: [
+                      Expanded(child: Container()),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Expanded(child: Container()),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Expanded(child: Container()),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Expanded(child: Container()),
+                    ],
+                  ),
+
+                  Text(
+                    '$_total1',
+                    style: Theme.of(context).textTheme.body2,
+                  ),
+                  Text(
+                    '$_total2',
+                    style: Theme.of(context).textTheme.body2,
+                  ),
+                  Text(
+                    '$_total3',
+                    style: Theme.of(context).textTheme.body2,
+                  ),
+                  Text(
+                    '$_total4',
+                    style: Theme.of(context).textTheme.body2,
+                  ),
+
+//            ],
+//        ),
+//          Row(
+//            children: <Widget>[
+//              Text(
+//                '$_row1scoreStr',
+//                style: Theme.of(context).textTheme.display1,
+//              ),
+//            ],
+//          ),
+        ]));
   }
 }
